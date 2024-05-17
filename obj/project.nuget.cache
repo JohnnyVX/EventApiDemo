@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FX/uZXtRbxYjH8du8udsrwQ+Dk2uppMBqlZjvKJnxNE8go0+s7SN4KKFDrIzI2yOQiaVHemHFITbM1Mak9VP/w==",
+  "dgSpecHash": "4N1m0Q741usAEd4rG1z9DjM3vYONetu4XTU/z3h7Y0/1Fmp1vcsv2wZ4WrJv/VycH20yZgdzga/PrWrdCcbqNg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\v-johnburke\\code\\pwsh\\Azure-Powershell-Operations\\Azure Policy\\EventApiDemo\\EventApiDemo.csproj",
+  "projectFilePath": "C:\\Users\\v-johnburke\\code\\EventApiDemo\\EventApiDemo.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\v-johnburke\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.5\\microsoft.aspnetcore.openapi.8.0.5.nupkg.sha512",
     "C:\\Users\\v-johnburke\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
