@@ -22,7 +22,7 @@ namespace EventApiDemo
             services.AddControllers(options =>
             {
                 // Uncomment the following line to use the custom exception filter
-                // options.Filters.Add<CustomExceptionFilter>();
+                options.Filters.Add<CustomExceptionFilter>();
             });
 
             // Register the Swagger generator, defining one or more Swagger documents
@@ -70,7 +70,7 @@ namespace EventApiDemo
             */
 
             // Uncomment the following line to use the custom exception middleware
-            app.UseMiddleware<ExceptionMiddleware>();
+            // app.UseMiddleware<ExceptionMiddleware>();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
