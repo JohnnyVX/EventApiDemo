@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\v-johnburke\\code\\EventApiDemo\\EventApiDemo.csproj": {}
+    "c:\\Users\\v-johnburke\\code\\EventApiDemo\\EventApiDemo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\v-johnburke\\code\\EventApiDemo\\EventApiDemo.csproj": {
+    "c:\\Users\\v-johnburke\\code\\EventApiDemo\\EventApiDemo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\v-johnburke\\code\\EventApiDemo\\EventApiDemo.csproj",
+        "projectUniqueName": "c:\\Users\\v-johnburke\\code\\EventApiDemo\\EventApiDemo.csproj",
         "projectName": "EventApiDemo",
-        "projectPath": "C:\\Users\\v-johnburke\\code\\EventApiDemo\\EventApiDemo.csproj",
+        "projectPath": "c:\\Users\\v-johnburke\\code\\EventApiDemo\\EventApiDemo.csproj",
         "packagesPath": "C:\\Users\\v-johnburke\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\v-johnburke\\code\\EventApiDemo\\obj\\",
+        "outputPath": "c:\\Users\\v-johnburke\\code\\EventApiDemo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\v-johnburke\\AppData\\Roaming\\NuGet\\NuGet.Config",
