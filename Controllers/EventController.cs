@@ -19,14 +19,26 @@ namespace Api.Controllers
             _eventService = eventService;
         }
 
-        [HttpGet("GetProposedEvent/{eventRegistrationBatchId}/{programType}")]
-        public async Task<IActionResult> GetProposedEvent(string eventRegistrationBatchId, string programType = null)
+        private async Task<IActionResult> ExecuteWithExceptionHandling(Func<Task<IActionResult>> action, string errorMessage)
         {
             try
             {
+                return await action();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, errorMessage);
+                return BadRequest(new { success = false, message = "An error occurred while processing your request. Please try again later." });
+            }
+        }
+
+        [HttpGet("GetProposedEvent/{eventRegistrationBatchId}/{programType}")]
+        public Task<IActionResult> GetProposedEvent(string eventRegistrationBatchId, string programType = null)
+        {
+            return ExecuteWithExceptionHandling(async () =>
+            {
                 if (string.IsNullOrEmpty(programType))
                 {
-                    // Set the default value for programType
                     programType = "DefaultProgramType";
                 }
 
@@ -37,69 +49,37 @@ namespace Api.Controllers
 
                 var result = await _eventService.GetProposedEventDetails(eventRegistrationBatchId, programTypeGuid);
                 return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                // Log the exception details internally along with the eventRegistrationBatchId and programType
-                _logger.LogError(ex, $"Error occurred while getting proposed event for eventRegistrationBatchId: {eventRegistrationBatchId}, programType: {programType}");
-
-                // Return a generic error message with a 400 status
-                return BadRequest(new { success = false, message = "An error occurred while processing your request. Please try again later." });
-            }
+            }, $"Error occurred while getting proposed event for eventRegistrationBatchId: {eventRegistrationBatchId}, programType: {programType}");
         }
 
         [HttpGet("IsOnEventAccessList/{mpnId}")]
-        public async Task<IActionResult> GetIsOnEventAccessList(string mpnId)
+        public Task<IActionResult> GetIsOnEventAccessList(string mpnId)
         {
-            try
+            return ExecuteWithExceptionHandling(async () =>
             {
                 var result = await _eventService.IsOnEventAccessList(mpnId);
                 return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                // Log the exception details internally along with the mpnId
-                _logger.LogError(ex, $"Error occurred while checking event access list for mpnId: {mpnId}");
-
-                // Return a generic error message with a 400 status
-                return BadRequest(new { success = false, message = "An error occurred while processing your request. Please try again later." });
-            }
+            }, $"Error occurred while checking event access list for mpnId: {mpnId}");
         }
 
         [HttpGet("CanPartnerAccessEventRegistrationBatchId/{mpnId}/{eventBatchId}/{programTypeGuid}")]
-        public async Task<IActionResult> CanPartnerAccessEventRegistrationBatchId(string mpnId, string eventBatchId, string programTypeGuid)
+        public Task<IActionResult> CanPartnerAccessEventRegistrationBatchId(string mpnId, string eventBatchId, string programTypeGuid)
         {
-            try
+            return ExecuteWithExceptionHandling(async () =>
             {
                 var result = await _eventService.CanPartnerAccessEventRegistrationBatchId(mpnId, eventBatchId, programTypeGuid);
                 return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                // Log the exception details internally along with the mpnId, eventBatchId, and programTypeGuid
-                _logger.LogError(ex, $"Error occurred while checking partner access for mpnId: {mpnId}, eventBatchId: {eventBatchId}, programTypeGuid: {programTypeGuid}");
-
-                // Return a generic error message with a 400 status
-                return BadRequest(new { success = false, message = "An error occurred while processing your request. Please try again later." });
-            }
+            }, $"Error occurred while checking partner access for mpnId: {mpnId}, eventBatchId: {eventBatchId}, programTypeGuid: {programTypeGuid}");
         }
 
-        [HttpGet("CanPartnerAccessEngagementId/{engagementId}")]
-        public async Task<IActionResult> CanPartnerAccessEngagementId(string engagementId)
+        [HttpGet("CanPartnerAccessEngagementId/{mpnId}/{engagementId}/{programTypeGuid}")]
+        public Task<IActionResult> CanPartnerAccessEngagementId(string mpnId, string engagementId, string programTypeGuid)
         {
-            try
+            return ExecuteWithExceptionHandling(async () =>
             {
-                var result = await _eventService.CanPartnerAccessEngagementId(engagementId);
+                var result = await _eventService.CanPartnerAccessEngagementId(mpnId, engagementId, programTypeGuid);
                 return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                // Log the exception details internally along with the engagementId
-                _logger.LogError(ex, $"Error occurred while checking access for engagementId: {engagementId}");
-
-                // Return a generic error message with a 400 status
-                return BadRequest(new { success = false, message = "An error occurred while processing your request. Please try again later." });
-            }
+            }, $"Error occurred while checking access for mpnId: {mpnId}, engagementId: {engagementId}, programTypeGuid: {programTypeGuid}");
         }
     }
 }
