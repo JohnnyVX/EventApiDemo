@@ -37,8 +37,20 @@ namespace Api.Controllers
         [HttpGet("IsOnEventAccessList/{mpnId}")]
         public async Task<IActionResult> GetIsOnEventAccessList(string mpnId)
         {
-            var result = await _eventService.IsOnEventAccessList(mpnId);
-            return Ok(result);
+            try
+            {
+                var result = await _eventService.IsOnEventAccessList(mpnId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception details internally
+                // You can use any logging framework like NLog, Serilog, etc.
+                // _logger.LogError(ex, "Error occurred while checking event access list.");
+
+                // Return a generic error message
+                return StatusCode(500, "An error occurred while processing your request. Please try again later.");
+            }
         }
 
         [HttpGet("CanPartnerAccessEventRegistrationBatchId/{mpnId}/{eventBatchId}/{programTypeGuid}")]
