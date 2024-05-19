@@ -47,7 +47,7 @@ namespace EventApiDemo
             // }
 
             // Uncomment the following block to use the built-in exception handler middleware
-            // /*
+            /*
             app.UseExceptionHandler(appBuilder =>
             {
                 appBuilder.Run(async context =>
@@ -67,10 +67,10 @@ namespace EventApiDemo
                     }
                 });
             });
-            // */
+            */
 
             // Uncomment the following line to use the custom exception middleware
-            // app.UseMiddleware<ExceptionMiddleware>();
+            app.UseMiddleware<ExceptionMiddleware>();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
