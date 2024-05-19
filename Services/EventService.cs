@@ -26,16 +26,25 @@ namespace Service.Events
                 case "9999":
                     throw new Exception("An error occurred.");
                 case "Niner":
-
+                case "niner":
                     using (var md5 = System.Security.Cryptography.MD5.Create())
                     {
-                        byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(mpnId);
-                        byte[] inputhashBytes = md5.ComputeHash(inputBytes, 10, 5); // This will throw an ArgumentOutOfRangeException
-                        byte[] mySecretBytes = System.Text.Encoding.ASCII.GetBytes("mySecertValue");
-                        byte[] mySecrethashBytes = md5.ComputeHash(mySecretBytes);
-                        return inputhashBytes == mySecrethashBytes ? Task.FromResult(true) : Task.FromResult(false);
+                        try
+                        {
+                            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(mpnId);
+                            byte[] inputhashBytes = md5.ComputeHash(inputBytes, 10, 5); // This will throw an ArgumentOutOfRangeException
+                            byte[] mySecretBytes = System.Text.Encoding.ASCII.GetBytes("mySecertValue");
+                            byte[] mySecrethashBytes = md5.ComputeHash(mySecretBytes);
+                            return inputhashBytes == mySecrethashBytes ? Task.FromResult(true) : Task.FromResult(false);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception("MD5 hash computation failed with ArgumentOutOfRangeException", ex);
+                        }
                     }
                 case "WalkieTalkie":
+                case "walkieTalkie":
+                case "walkietalkie":
                     // Simulating SQL injection vulnerability
                     string sqlQuery = $"SELECT * FROM Users WHERE Username = '{mpnId}'";
                     // Execute the SQL query and handle the result
