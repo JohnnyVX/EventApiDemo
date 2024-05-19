@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Service.Events;
+using Microsoft.Extensions.Logging;
 
 namespace Api.Controllers
 {
@@ -9,10 +10,12 @@ namespace Api.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
+        private readonly ILogger<EventController> _logger;
         private readonly EventService _eventService;
 
-        public EventController(EventService eventService)
+        public EventController(EventService eventService, ILogger<EventController> logger)
         {
+            _logger = logger;
             _eventService = eventService;
         }
 
@@ -45,8 +48,7 @@ namespace Api.Controllers
             catch (Exception ex)
             {
                 // Log the exception details internally
-                // You can use any logging framework like NLog, Serilog, etc.
-                // _logger.LogError(ex, "Error occurred while checking event access list.");
+                _logger.LogError(ex, "Error occurred while checking event access list.");
 
                 // Return a generic error message
                 return StatusCode(500, "An error occurred while processing your request. Please try again later.");
