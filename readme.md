@@ -88,7 +88,7 @@ A: If returning a 200 status code is not acceptable in the case of an error, you
 
 A: Yes, you can include additional information in the log message to help diagnose the issue. One common approach is to include the input parameters of the method in the log message.
 
-## Final Solution
+## A "Final" Solution
 This conversation with GitHub Copilot helped us improve the security of the `GetIsOnEventAccessList` method by preventing stack traces from being returned in the response.
 ```csharp
 [HttpGet("IsOnEventAccessList/{mpnId}")]
@@ -108,3 +108,15 @@ public async Task<IActionResult> GetIsOnEventAccessList(string mpnId)
         return BadRequest(new { success = false, message = "An error occurred while processing your request. Please try again later." });
     }
 }
+```
+
+## Original Code
+
+```csharp
+[HttpGet("IsOnEventAccessList/{mpnId}")]
+public async Task<IActionResult> GetIsOnEventAccessList(string mpnId)
+{
+    var result = await _eventService.IsOnEventAccessList(mpnId);
+    return Ok(result);
+}
+```
