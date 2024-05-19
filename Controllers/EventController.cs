@@ -48,7 +48,7 @@ namespace Api.Controllers
             catch (Exception ex)
             {
                 // Log the exception details internally
-                _logger.LogError(ex, "Error occurred while checking event access list.");
+                _logger.LogError(ex, $"Error occurred while checking event access list for mpnId: {mpnId}");
 
                 // Return a generic error message with a 400 status
                 return BadRequest(new { success = false, message = "An error occurred while processing your request. Please try again later." });
