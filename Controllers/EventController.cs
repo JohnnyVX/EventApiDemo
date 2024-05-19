@@ -62,11 +62,21 @@ namespace Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("canPartnerAccessEngagementId/{mpnId}/{engagementId}/{programTypeGuid}")]
-        public async Task<IActionResult> canPartnerAccessEngagementId(string mpnId, string engagementId, string programTypeGuid)
+        public async Task<IActionResult> CanPartnerAccessEngagementId(string engagementId)
         {
-            var result = await _eventService.CanPartnerAccessEngagementId(mpnId, engagementId, programTypeGuid);
-            return Ok(result);
+            try
+            {
+                var result = await _eventService.CanPartnerAccessEngagementId(engagementId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception details internally along with the engagementId
+                _logger.LogError(ex, $"Error occurred while checking access for engagementId: {engagementId}");
+
+                // Return a generic error message with a 400 status
+                return BadRequest(new { success = false, message = "An error occurred while processing your request. Please try again later." });
+            }
         }
     }
 }
