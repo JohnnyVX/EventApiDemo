@@ -3,19 +3,10 @@
 This project is a .NET Core Web API application that provides endpoints for event management.
 
 # Setup
+The app should be all set to run as is. Main branch contains vulnerabilities. Other branches contain solutions, some with commits to show various steps.
 
-To set up the project, run the PowerShell scripts in the `SetupScripts` directory:
 
-```sh
-.\SetupScripts\New-ApiDemo.ps1
-.\SetupScripts\Set-Program.ps1
-.\SetupScripts\Set-EventController.ps1
-.\SetupScripts\Set-EventService.ps1
-```
-
-These scripts will create the necessary directories and files, initialize a Git repository, and set up the project for first use.
-
-# Running the Application
+## Running the Application
 After setting up, you can build and run the application:
 dotnet build
 dotnet run
@@ -32,91 +23,61 @@ http://localhost:5175/api/Event/IsOnEventAccessList/1234
 
 Note: If you use an invalid ID such as `error`, the application will throw an exception.
 
-# Handling Exceptions in the GetIsOnEventAccessList Method
+# Alternative Scripts Folder Start from Scratch Setup
+
+If one wanted to create their own demo from scratch, some scripts that were used as a basis for creating the repo are in `SetupScripts` directory. These scripts will create the necessary directories and files, initialize a Git repository, and set up the project for first use.
+
+# Remediating Handling Exceptions in the GetIsOnEventAccessList Method for all Methods
 
 During the development of the `GetIsOnEventAccessList` method, we identified a potential security risk: the method was returning stack traces in the response when an exception occurred. To mitigate this risk, we used GitHub Copilot to guide us through the process of improving the method.
 
-## Potenial Questions with GitHub Copilot
+After fixing it, we realized it should get fixed on all endpoints
 
-**Q: I want to give a demo and how I can use Github copilot to chat to fix. security errors that a stacktrace is coming back from the is an event access list endpoint. What prompts should I ask you?**
-
-A: It gave the questions below
-
-**Q: What is the purpose of the GetIsOnEventAccessList method?**
-
-A: The `GetIsOnEventAccessList` method is an API endpoint that checks if an event is on the access list. It takes an event ID (`mpnId`) as a parameter.
-
-**Q: What are the potential security risks in the GetIsOnEventAccessList method?**
-
-A: The method was initially designed to return a stack trace in the response when an exception occurred. This could potentially expose sensitive information about the application's internal workings, which is a security risk.
-
-**Q: How can I prevent stack traces from being returned in the response of the GetIsOnEventAccessList method?**
-
-A: You can handle exceptions within the method and return a more generic error message to the client, without exposing the stack trace.
-
-**Q: How can I handle exceptions in the GetIsOnEventAccessList method to avoid exposing stack traces?**
-
-A: You can use a try-catch block to catch exceptions that occur in the method. In the catch block, you can log the exception and return a generic error message.
-
-**Q: Can you generate a code snippet to demonstrate how to implement these security improvements?**
-
-A: Authors note: it's not quite that simple, so the answer is below. It has context
 
 ## Actual Conversation with GitHub Copilot
 
-**Q: A QA informed me that a stack trace is coming back from the is on event access list endpoint. I'm not allowed to send stack traces back for API calls. Can you fix that?**
+**JohnnyVReply & TaThompson: Now I have 3 new bugs for each of the endpoints. Can you make a common method so that the air handling is all in one place?**
 
-A: Yes, you can handle exceptions within the method and return a more generic error message to the client, without exposing the stack trace.
+**GitHub Copilot Chat**: 
+Sure, we can create a common method to handle the exceptions. This method will take a Func<Task<IActionResult>> as a parameter, which represents the action to be executed. If an exception occurs during the execution of this action, the method will catch it and return a BadRequest response.
 
-**Q: The name '_logger' does not exist in the current context.**
+In this refactored code, the ExecuteWithExceptionHandling method is used to wrap the execution of each action. If an exception is thrown during the execution of the action, it is caught and logged, and a BadRequest response is returned. This reduces the repetition of exception handling code in each method.
 
-A: `_logger` is an instance of `ILogger`, which is used for logging in .NET. You need to inject it into your controller through the constructor.
-
-**Q: Apparently I can't return 500 errors.**
-
-A: If returning a 500 error is considered a security vulnerability in your context, you can return a 200 OK status with a custom error object.
-
-**Q: My QA didn't like that, are there other options?**
-
-A: Yes, there are other options. One common approach is to return a 200 OK status with a custom response object that includes both a success flag and a message.
-
-**Q: Is there a different option? They don't like the 200.**
-
-A: If returning a 200 status code is not acceptable in the case of an error, you can return a 400 (Bad Request) or 503 (Service Unavailable) status code.
-
-**Q: They like that, but my lead developer is always encouraging us to improve our logs. is there a way to improve the log message so I know more info on what went wrong?**
-
-A: Yes, you can include additional information in the log message to help diagnose the issue. One common approach is to include the input parameters of the method in the log message.
-
-## ✅ QA 'Accepted' Solution
-This conversation with GitHub Copilot helped us improve the security of the `GetIsOnEventAccessList` method by preventing stack traces from being returned in the response.
+Here's how you can modify your code:
+`GetIsOnEventAccessList` method by preventing stack traces from being returned in the response.
 ```csharp
-[HttpGet("IsOnEventAccessList/{mpnId}")]
-public async Task<IActionResult> GetIsOnEventAccessList(string mpnId)
-{
-    try
-    {
-        var result = await _eventService.IsOnEventAccessList(mpnId);
-        return Ok(result);
+        // rest of controller up to Constructor
+        public EventController(EventService eventService, ILogger<EventController> logger)
+        {
+            _logger = logger;
+            _eventService = eventService;
+        }
+
+        // changes start here
+        private async Task<IActionResult> ExecuteWithExceptionHandling(Func<Task<IActionResult>> action, string errorMessage)
+        {
+            try
+            {
+                return await action();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, errorMessage);
+                return BadRequest(new { success = false, message = "An error occurred while processing your request. Please try again later." });
+            }
+        }
+
+        [HttpGet("IsOnEventAccessList/{mpnId}")]
+        public Task<IActionResult> GetIsOnEventAccessList(string mpnId)
+        {
+            return ExecuteWithExceptionHandling(async () =>
+            {
+                var result = await _eventService.IsOnEventAccessList(mpnId);
+                return Ok(result);
+            }, $"Error occurred while checking event access list for mpnId: {mpnId}");
+        }
+
+        // ... other endpoints ExecuteWithExceptionHandling w/ a unique error message for the context
     }
-    catch (Exception ex)
-    {
-        // Log the exception details internally along with the mpnId
-        _logger.LogError(ex, $"Error occurred while checking event access list for mpnId: {mpnId}");
-
-        // Return a generic error message with a 400 status
-        return BadRequest(new { success = false, message = "An error occurred while processing your request. Please try again later." });
-    }
-}
-```
-
-## Original Code
-
-```csharp
-[HttpGet("IsOnEventAccessList/{mpnId}")]
-public async Task<IActionResult> GetIsOnEventAccessList(string mpnId)
-{
-    var result = await _eventService.IsOnEventAccessList(mpnId);
-    return Ok(result);
 }
 ```
