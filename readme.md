@@ -41,7 +41,7 @@ Note: If you use an invalid ID such as `error`, the application will throw an ex
 **GitHub Copilot Chat**:
 We discussed several options for centralized exception handling in our .NET Core Web API application, each with its own pros and cons:
 
-For each, we modified [`Program.cs`](Program.cs") to call [`Startup.cs`](Startup.cs).
+For each, we modified [`Program.cs`](Program.cs) to call [`Startup.cs`](Startup.cs).
 
 1. **Custom Middleware**: This allows us to handle exceptions at a global level, providing a consistent response structure for all exceptions. However, it might not have access to some HTTP context details compared to filters. The implementation can be found in [`ExceptionMiddleware.cs`](Middleware/ExceptionMiddleware.cs). To use the custom middleware, you need to add it to the `Configure` method in [`Startup.cs`](Startup.cs).
 
