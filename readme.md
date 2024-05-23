@@ -35,9 +35,11 @@ Note: If you use an invalid ID such as `error`, the application will throw an ex
 # Centralized Exception Handling
 
 ## Prompt and Discussions
-**Prompt**: "I'm adding a new controller and I'd like the exception handling to be centralized, what are my options for doing that?"
+**JohnnyVReply & TaThompson**: 
+@workspace I'm adding a new controller and I'd like the exception handling to be centralized, what are my options for doing that?"
 
-**Response**: We discussed several options for centralized exception handling in our .NET Core Web API application, each with its own pros and cons:
+**GitHub Copilot Chat**:
+We discussed several options for centralized exception handling in our .NET Core Web API application, each with its own pros and cons:
 
 For each, we modified [`Program.cs`](Program.cs") to call [`Startup.cs`](Startup.cs).
 
@@ -53,18 +55,18 @@ For each, we modified [`Program.cs`](Program.cs") to call [`Startup.cs`](Startup
 
 ### Startup Class Not Being Called
 
-**Prompt**: "The Startup class is not being called."
+**JohnnyVReply & TaThompson**: @workspace The Startup class is not being called.
 
-**Response**: We discovered that the `Program.cs` file was using the new minimal hosting model introduced in .NET 6.0, which doesn't require a `Startup` class. We discussed how to modify `Program.cs` to use the traditional hosting model if necessary.
+**GitHub Copilot Chat**: We discovered that the `Program.cs` file was using the new minimal hosting model introduced in .NET 6.0, which doesn't require a `Startup` class. We discussed how to modify `Program.cs` to use the traditional hosting model if necessary.
 
 ### Swagger Not Working
 
-**Prompt**: "Swagger is not working."
+**JohnnyVReply & TaThompson**: @workspace Swagger is not working.
 
-**Response**: We discussed how the order of middleware in the application pipeline could affect Swagger. We ensured that `app.UseSwagger();` and `app.UseSwaggerUI();` were placed before `app.UseRouting();` and `app.UseEndpoints();`.
+**GitHub Copilot Chat**: We discovered that the Swagger configuration was completely missing. This was an oversight on my part during the transition from `Program.cs` to `Startup.cs`. We discussed how to add the necessary Swagger configuration to restore its functionality.
 
 ### Dependency Injection Issue
 
-**Prompt**: "The application is throwing an error when trying to resolve `Service.Events.EventService`."
+**TJohnnyVReply & TaThompson**: @workspace The application is throwing an error when trying to resolve `Service.Events.EventService`.
 
-**Response**: We discovered that `EventService` was not registered with the dependency injection container. We discussed how to register `EventService` in the `ConfigureServices` method in `Startup.cs`.
+**GitHub Copilot Chat**: We discovered that `EventService` was not registered with the dependency injection container. This was a configuration oversight on my part during the transition from `Program.cs` to `Startup.cs`. We discussed how to register `EventService` in the `ConfigureServices` method in `Startup.cs` to resolve the issue.
