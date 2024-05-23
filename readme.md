@@ -36,7 +36,7 @@ After fixing it, we realized it should get fixed on all endpoints
 
 ## Actual Conversation with GitHub Copilot
 
-**JohnnyVReply & TaThompson: Now I have 3 new bugs for each of the endpoints. Can you make a common method so that the air handling is all in one place?**
+**JohnnyVReply & TaThompson: Now I have 3 new bugs for each of the endpoints. Can you make a common method so that the error handling is all in one place?**
 
 **GitHub Copilot Chat**: 
 Sure, we can create a common method to handle the exceptions. This method will take a Func<Task<IActionResult>> as a parameter, which represents the action to be executed. If an exception occurs during the execution of this action, the method will catch it and return a BadRequest response.
