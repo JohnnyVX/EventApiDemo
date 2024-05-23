@@ -55,18 +55,18 @@ For each, we modified [`Program.cs`](Program.cs) to call [`Startup.cs`](Startup.
 
 ### Startup Class Not Being Called
 
-**JohnnyVReply & TaThompson**: @workspace The Startup class is not being called.
+**JohnnyVReply & TaThompson**: @workspace The Startup class is not being called (plus some discussion)
 
 **GitHub Copilot Chat**: We discovered that the `Program.cs` file was using the new minimal hosting model introduced in .NET 6.0, which doesn't require a `Startup` class. We discussed how to modify `Program.cs` to use the traditional hosting model if necessary.
 
 ### Swagger Not Working
 
-**JohnnyVReply & TaThompson**: @workspace Swagger is not working.
+**JohnnyVReply & TaThompson**: @workspace Swagger is not working (plus some discussion)
 
 **GitHub Copilot Chat**: We discovered that the Swagger configuration was completely missing. This was an oversight on my part during the transition from `Program.cs` to `Startup.cs`. We discussed how to add the necessary Swagger configuration to restore its functionality.
 
 ### Dependency Injection Issue
 
-**JohnnyVReply & TaThompson**: @workspace The application is throwing an error when trying to resolve `Service.Events.EventService`.
+**JohnnyVReply & TaThompson**: @workspace The application is throwing an error when trying to resolve `Service.Events.EventService` (plus some discussion)
 
 **GitHub Copilot Chat**: We discovered that `EventService` was not registered with the dependency injection container. This was a configuration oversight on my part during the transition from `Program.cs` to `Startup.cs`. We discussed how to register `EventService` in the `ConfigureServices` method in `Startup.cs` to resolve the issue.
