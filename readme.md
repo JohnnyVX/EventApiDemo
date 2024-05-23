@@ -67,6 +67,6 @@ For each, we modified [`Program.cs`](Program.cs) to call [`Startup.cs`](Startup.
 
 ### Dependency Injection Issue
 
-**TJohnnyVReply & TaThompson**: @workspace The application is throwing an error when trying to resolve `Service.Events.EventService`.
+**JohnnyVReply & TaThompson**: @workspace The application is throwing an error when trying to resolve `Service.Events.EventService`.
 
 **GitHub Copilot Chat**: We discovered that `EventService` was not registered with the dependency injection container. This was a configuration oversight on my part during the transition from `Program.cs` to `Startup.cs`. We discussed how to register `EventService` in the `ConfigureServices` method in `Startup.cs` to resolve the issue.
