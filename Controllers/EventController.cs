@@ -16,8 +16,15 @@ namespace Api.Controllers
             _eventService = eventService;
         }
 
+        [HttpGet("IsOnEventAccessList/{mpnId}")]
+        public async Task<IActionResult> GetIsOnEventAccessList(string mpnId)
+        {
+            var result = await _eventService.IsOnEventAccessList(mpnId);
+            return Ok(result);
+        }
+
         [HttpGet("GetProposedEvent/{eventRegistrationBatchId}/{programType}")]
-        public async Task<IActionResult> GetProposedEvent(string eventRegistrationBatchId, string programType = null)
+        public async Task<IActionResult> GetProposedEvent(string eventRegistrationBatchId, string? programType = null)
         {
             if (string.IsNullOrEmpty(programType))
             {
@@ -31,13 +38,6 @@ namespace Api.Controllers
             }
 
             var result = await _eventService.GetProposedEventDetails(eventRegistrationBatchId, programTypeGuid);
-            return Ok(result);
-        }
-
-        [HttpGet("IsOnEventAccessList/{mpnId}")]
-        public async Task<IActionResult> GetIsOnEventAccessList(string mpnId)
-        {
-            var result = await _eventService.IsOnEventAccessList(mpnId);
             return Ok(result);
         }
 
