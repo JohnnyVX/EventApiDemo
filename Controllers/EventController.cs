@@ -22,7 +22,6 @@ namespace Api.Controllers
             var result = await _eventService.IsOnEventAccessList(mpnId);
             return Ok(result);
         }
-
         [HttpGet("GetProposedEvent/{eventRegistrationBatchId}/{programType}")]
         public async Task<IActionResult> GetProposedEvent(string eventRegistrationBatchId, string? programType = null)
         {
