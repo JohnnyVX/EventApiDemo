@@ -31,17 +31,17 @@ If one wanted to create their own demo from scratch, some scripts that were used
 
 During the development of the `GetIsOnEventAccessList` method, we identified a potential security risk: the method was returning stack traces in the response when an exception occurred. To mitigate this risk, we used GitHub Copilot to guide us through the process of improving the method.
 
-## Potenial Questions with GitHub Copilot
+## Potential Questions with GitHub Copilot
 
-**JohnnyVReply & TaThompson: I want to give a demo and how I can use Github copilot to chat to fix. security errors that a stacktrace is coming back from the is an event access list endpoint. What prompts should I ask you?**
+**Developer: I want to give a demo and how I can use Github copilot to chat to fix. security errors that a stacktrace is coming back from the is an event access list endpoint. What prompts should I ask you?**
 
 **GitHub Copilot Chat**: It gave the questions below
 
-**JohnnyVReply & TaThompson: What is the purpose of the GetIsOnEventAccessList method?**
+**Developer: What is the purpose of the GetIsOnEventAccessList method?**
 
 **GitHub Copilot Chat**: The `GetIsOnEventAccessList` method is an API endpoint that checks if an event is on the access list. It takes an event ID (`mpnId`) as a parameter.
 
-**JohnnyVReply & TaThompson: What are the potential security risks in the GetIsOnEventAccessList method?**
+**Developer: What are the potential security risks in the GetIsOnEventAccessList method?**
 
 **GitHub Copilot Chat**: The method was initially designed to return a stack trace in the response when an exception occurred. This could potentially expose sensitive information about the application's internal workings, which is a security risk.
 
@@ -49,37 +49,37 @@ During the development of the `GetIsOnEventAccessList` method, we identified a p
 
 **GitHub Copilot Chat**: You can handle exceptions within the method and return a more generic error message to the client, without exposing the stack trace.
 
-**JohnnyVReply & TaThompson: How can I handle exceptions in the GetIsOnEventAccessList method to avoid exposing stack traces?**
+**Developer: How can I handle exceptions in the GetIsOnEventAccessList method to avoid exposing stack traces?**
 
 **GitHub Copilot Chat**: You can use a try-catch block to catch exceptions that occur in the method. In the catch block, you can log the exception and return a generic error message.
 
-**JohnnyVReply & TaThompson: Can you generate a code snippet to demonstrate how to implement these security improvements?**
+**Developer: Can you generate a code snippet to demonstrate how to implement these security improvements?**
 
 **GitHub Copilot Chat**: Authors note: it's not quite that simple, so the answer is below. It has context
 
 ## Actual Conversation with GitHub Copilot
 
-**JohnnyVReply & TaThompson: A QA informed me that a stack trace is coming back from the is on event access list endpoint. I'm not allowed to send stack traces back for API calls. Can you fix that?**
+**Developer: A QA informed me that a stack trace is coming back from the is on event access list endpoint. I'm not allowed to send stack traces back for API calls. Can you fix that?**
 
 **GitHub Copilot Chat**: Yes, you can handle exceptions within the method and return a more generic error message to the client, without exposing the stack trace.
 
-**JohnnyVReply & TaThompson: The name '_logger' does not exist in the current context.**
+**Developer: The name '_logger' does not exist in the current context.**
 
 **GitHub Copilot Chat**: `_logger` is an instance of `ILogger`, which is used for logging in .NET. You need to inject it into your controller through the constructor.
 
-**JohnnyVReply & TaThompson: Apparently I can't return 500 errors.**
+**Developer: Apparently I can't return 500 errors.**
 
 **GitHub Copilot Chat**: If returning a 500 error is considered a security vulnerability in your context, you can return a 200 OK status with a custom error object.
 
-**JohnnyVReply & TaThompson: My QA didn't like that, are there other options?**
+**Developer: My QA didn't like that, are there other options?**
 
 **GitHub Copilot Chat**: Yes, there are other options. One common approach is to return a 200 OK status with a custom response object that includes both a success flag and a message.
 
-**JohnnyVReply & TaThompson: Is there a different option? They don't like the 200.**
+**Developer: Is there a different option? They don't like the 200.**
 
 **GitHub Copilot Chat**: If returning a 200 status code is not acceptable in the case of an error, you can return a 400 (Bad Request) or 503 (Service Unavailable) status code.
 
-**JohnnyVReply & TaThompson: They like that, but my lead developer is always encouraging us to improve our logs. is there a way to improve the log message so I know more info on what went wrong?**
+**Developer: They like that, but my lead developer is always encouraging us to improve our logs. is there a way to improve the log message so I know more info on what went wrong?**
 
 **GitHub Copilot Chat**: Yes, you can include additional information in the log message to help diagnose the issue. One common approach is to include the input parameters of the method in the log message.
 
