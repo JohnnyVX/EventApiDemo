@@ -63,7 +63,7 @@ During the development of the `GetIsOnEventAccessList` method, we identified a p
 
 **GitHub Copilot Chat**: Yes, you can handle exceptions within the method and return a more generic error message to the client, without exposing the stack trace.
 
-**Developer: The name '_logger' does not exist in the current context.**
+**Developer**: The name '_logger' does not exist in the current context.
 
 **GitHub Copilot Chat**: `_logger` is an instance of `ILogger`, which is used for logging in .NET. You need to inject it into your controller through the constructor.
 
