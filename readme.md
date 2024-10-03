@@ -16,7 +16,7 @@ The application will be available at http://localhost:5175.
 # Endpoints
 The application provides the following endpoints:
 
-GET http://localhost:5175/api/Event/IsOnEventAccessList/{mpnId}: Checks if an event is on the access list. Replace {mpnId} with the ID of the event.
+GET http://localhost:5175/api/Event/IsOnEventAccessList/{partnerId}: Checks if an event is on the access list. Replace {partnerId} with the ID of the event.
 
 For example, to check if event `1234` is on the access list, use the following URL:
 http://localhost:5175/api/Event/IsOnEventAccessList/1234
