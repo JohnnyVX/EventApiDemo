@@ -52,34 +52,34 @@ namespace Api.Controllers
             }, $"Error occurred while getting proposed event for eventRegistrationBatchId: {eventRegistrationBatchId}, programType: {programType}");
         }
 
-        [HttpGet("IsOnEventAccessList/{mpnId}")]
-        public Task<IActionResult> GetIsOnEventAccessList(string mpnId)
+        [HttpGet("IsOnEventAccessList/{partnerId}")]
+        public Task<IActionResult> GetIsOnEventAccessList(string partnerId)
         {
             return ExecuteWithExceptionHandling(async () =>
             {
-                var result = await _eventService.IsOnEventAccessList(mpnId);
+                var result = await _eventService.IsOnEventAccessList(partnerId);
                 return Ok(result);
-            }, $"Error occurred while checking event access list for mpnId: {mpnId}");
+            }, $"Error occurred while checking event access list for partnerId: {partnerId}");
         }
 
-        [HttpGet("CanPartnerAccessEventRegistrationBatchId/{mpnId}/{eventBatchId}/{programTypeGuid}")]
-        public Task<IActionResult> CanPartnerAccessEventRegistrationBatchId(string mpnId, string eventBatchId, string programTypeGuid)
+        [HttpGet("CanPartnerAccessEventRegistrationBatchId/{partnerId}/{eventBatchId}/{programTypeGuid}")]
+        public Task<IActionResult> CanPartnerAccessEventRegistrationBatchId(string partnerId, string eventBatchId, string programTypeGuid)
         {
             return ExecuteWithExceptionHandling(async () =>
             {
-                var result = await _eventService.CanPartnerAccessEventRegistrationBatchId(mpnId, eventBatchId, programTypeGuid);
+                var result = await _eventService.CanPartnerAccessEventRegistrationBatchId(partnerId, eventBatchId, programTypeGuid);
                 return Ok(result);
-            }, $"Error occurred while checking partner access for mpnId: {mpnId}, eventBatchId: {eventBatchId}, programTypeGuid: {programTypeGuid}");
+            }, $"Error occurred while checking partner access for partnerId: {partnerId}, eventBatchId: {eventBatchId}, programTypeGuid: {programTypeGuid}");
         }
 
-        [HttpGet("CanPartnerAccessEngagementId/{mpnId}/{engagementId}/{programTypeGuid}")]
-        public Task<IActionResult> CanPartnerAccessEngagementId(string mpnId, string engagementId, string programTypeGuid)
+        [HttpGet("CanPartnerAccessEngagementId/{partnerId}/{engagementId}/{programTypeGuid}")]
+        public Task<IActionResult> CanPartnerAccessEngagementId(string partnerId, string engagementId, string programTypeGuid)
         {
             return ExecuteWithExceptionHandling(async () =>
             {
-                var result = await _eventService.CanPartnerAccessEngagementId(mpnId, engagementId, programTypeGuid);
+                var result = await _eventService.CanPartnerAccessEngagementId(partnerId, engagementId, programTypeGuid);
                 return Ok(result);
-            }, $"Error occurred while checking access for mpnId: {mpnId}, engagementId: {engagementId}, programTypeGuid: {programTypeGuid}");
+            }, $"Error occurred while checking access for partnerId: {partnerId}, engagementId: {engagementId}, programTypeGuid: {programTypeGuid}");
         }
     }
 }
