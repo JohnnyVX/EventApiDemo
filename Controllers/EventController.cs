@@ -16,10 +16,10 @@ namespace Api.Controllers
             _eventService = eventService;
         }
 
-        [HttpGet("IsOnEventAccessList/{mpnId}")]
-        public async Task<IActionResult> GetIsOnEventAccessList(string mpnId)
+        [HttpGet("IsOnEventAccessList/{partnerId}")]
+        public async Task<IActionResult> GetIsOnEventAccessList(string partnerId)
         {
-            var result = await _eventService.IsOnEventAccessList(mpnId);
+            var result = await _eventService.IsOnEventAccessList(partnerId);
             return Ok(result);
         }
 
@@ -41,17 +41,17 @@ namespace Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("CanPartnerAccessEventRegistrationBatchId/{mpnId}/{eventBatchId}/{programTypeGuid}")]
-        public async Task<IActionResult> CanPartnerAccessEventRegistrationBatchId(string mpnId, string eventBatchId, string programTypeGuid)
+        [HttpGet("CanPartnerAccessEventRegistrationBatchId/{partnerId}/{eventBatchId}/{programTypeGuid}")]
+        public async Task<IActionResult> CanPartnerAccessEventRegistrationBatchId(string partnerId, string eventBatchId, string programTypeGuid)
         {
-            var result = await _eventService.CanPartnerAccessEventRegistrationBatchId(mpnId, eventBatchId, programTypeGuid);
+            var result = await _eventService.CanPartnerAccessEventRegistrationBatchId(partnerId, eventBatchId, programTypeGuid);
             return Ok(result);
         }
 
-        [HttpGet("canPartnerAccessEngagementId/{mpnId}/{engagementId}/{programTypeGuid}")]
-        public async Task<IActionResult> canPartnerAccessEngagementId(string mpnId, string engagementId, string programTypeGuid)
+        [HttpGet("canPartnerAccessEngagementId/{partnerId}/{engagementId}/{programTypeGuid}")]
+        public async Task<IActionResult> canPartnerAccessEngagementId(string partnerId, string engagementId, string programTypeGuid)
         {
-            var result = await _eventService.CanPartnerAccessEngagementId(mpnId, engagementId, programTypeGuid);
+            var result = await _eventService.CanPartnerAccessEngagementId(partnerId, engagementId, programTypeGuid);
             return Ok(result);
         }
     }
