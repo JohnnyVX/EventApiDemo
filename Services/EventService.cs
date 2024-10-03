@@ -15,9 +15,9 @@ namespace Service.Events
             return Task.FromResult($"Dummy proposed event details for {eventRegistrationBatchId} and {programTypeGuid}");
         }
 
-        public Task<string> IsOnEventAccessList(string mpnId)
+        public Task<string> IsOnEventAccessList(string partnerId)
         {
-            switch (mpnId)
+            switch (partnerId)
             {
                 case "1234":
                 case "5678":
@@ -31,7 +31,7 @@ namespace Service.Events
                     {
                         try
                         {
-                            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(mpnId);
+                            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(partnerId);
                             byte[] inputhashBytes = md5.ComputeHash(inputBytes, 10, 5); // This will throw an ArgumentOutOfRangeException
                             byte[] mySecretBytes = System.Text.Encoding.ASCII.GetBytes("mySecertValue");
                             byte[] mySecrethashBytes = md5.ComputeHash(mySecretBytes);
@@ -46,39 +46,39 @@ namespace Service.Events
                 case "walkieTalkie":
                 case "walkietalkie":
                     // Simulating SQL injection vulnerability
-                    string sqlQuery = $"SELECT * FROM Users WHERE Username = '{mpnId}'";
+                    string sqlQuery = $"SELECT * FROM Users WHERE Username = '{partnerId}'";
                     // Execute the SQL query and handle the result
-                    throw new Exception("SQL Error with Query: SELECT * FROM Users WHERE Username = '{mpnId}'");
+                    throw new Exception("SQL Error with Query: SELECT * FROM Users WHERE Username = '{partnerId}'");
                 default:
                     return Task.FromResult("false");
                 case "mpnID":
-                case "mpnId":
+                case "partnerId":
                 case "MPNID":
                     //simulating a user entering placeholder text as the value
-                    string message = $"MPN ID: {mpnId} is not valid. Please enter a valid MPN ID.";
+                    string message = $"MPN ID: {partnerId} is not valid. Please enter a valid MPN ID.";
                     //Search for the invalidMpnId in the database and handle the result
-                    return Task.FromResult($"{mpnId} is not a valid MPN ID.");
+                    return Task.FromResult($"{partnerId} is not a valid MPN ID.");
             }
         }
 
-        public Task<string> CanPartnerAccessEventRegistrationBatchId(string mpnId, string eventBatchId, string programTypeGuid)
+        public Task<string> CanPartnerAccessEventRegistrationBatchId(string partnerId, string eventBatchId, string programTypeGuid)
         {
-            if (mpnId == "error" || eventBatchId == "error" || programTypeGuid == "error")
+            if (partnerId == "error" || eventBatchId == "error" || programTypeGuid == "error")
             {
                 throw new Exception("Internal Server Error");
             }
 
-            return Task.FromResult($"Dummy partner access status for {mpnId}, {eventBatchId}, and {programTypeGuid}");
+            return Task.FromResult($"Dummy partner access status for {partnerId}, {eventBatchId}, and {programTypeGuid}");
         }
 
-        public Task<string> CanPartnerAccessEngagementId(string mpnId, string engagementId, string programTypeGuid)
+        public Task<string> CanPartnerAccessEngagementId(string partnerId, string engagementId, string programTypeGuid)
         {
-            if (mpnId == "error" || engagementId == "error" || programTypeGuid == "error")
+            if (partnerId == "error" || engagementId == "error" || programTypeGuid == "error")
             {
                 throw new Exception("Internal Server Error");
             }
 
-            return Task.FromResult($"Dummy partner access status for {mpnId}, {engagementId}, and {programTypeGuid}");
+            return Task.FromResult($"Dummy partner access status for {partnerId}, {engagementId}, and {programTypeGuid}");
         }
     }
 }
