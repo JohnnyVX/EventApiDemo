@@ -37,35 +37,35 @@ namespace Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("IsOnEventAccessList/{mpnId}")]
-        public async Task<IActionResult> GetIsOnEventAccessList(string mpnId)
+        [HttpGet("IsOnEventAccessList/{partnerId}")]
+        public async Task<IActionResult> GetIsOnEventAccessList(string partnerId)
         {
             try
             {
-                var result = await _eventService.IsOnEventAccessList(mpnId);
+                var result = await _eventService.IsOnEventAccessList(partnerId);
                 return Ok(result);
             }
             catch (Exception ex)
             {
                 // Log the exception details internally
-                _logger.LogError(ex, $"Error occurred while checking event access list for mpnId: {mpnId}");
+                _logger.LogError(ex, $"Error occurred while checking event access list for partnerId: {partnerId}");
 
                 // Return a generic error message with a 400 status
                 return BadRequest(new { success = false, message = "An error occurred while processing your request. Please try again later." });
             }
         }
 
-        [HttpGet("CanPartnerAccessEventRegistrationBatchId/{mpnId}/{eventBatchId}/{programTypeGuid}")]
-        public async Task<IActionResult> CanPartnerAccessEventRegistrationBatchId(string mpnId, string eventBatchId, string programTypeGuid)
+        [HttpGet("CanPartnerAccessEventRegistrationBatchId/{partnerId}/{eventBatchId}/{programTypeGuid}")]
+        public async Task<IActionResult> CanPartnerAccessEventRegistrationBatchId(string partnerId, string eventBatchId, string programTypeGuid)
         {
-            var result = await _eventService.CanPartnerAccessEventRegistrationBatchId(mpnId, eventBatchId, programTypeGuid);
+            var result = await _eventService.CanPartnerAccessEventRegistrationBatchId(partnerId, eventBatchId, programTypeGuid);
             return Ok(result);
         }
 
-        [HttpGet("canPartnerAccessEngagementId/{mpnId}/{engagementId}/{programTypeGuid}")]
-        public async Task<IActionResult> canPartnerAccessEngagementId(string mpnId, string engagementId, string programTypeGuid)
+        [HttpGet("canPartnerAccessEngagementId/{partnerId}/{engagementId}/{programTypeGuid}")]
+        public async Task<IActionResult> canPartnerAccessEngagementId(string partnerId, string engagementId, string programTypeGuid)
         {
-            var result = await _eventService.CanPartnerAccessEngagementId(mpnId, engagementId, programTypeGuid);
+            var result = await _eventService.CanPartnerAccessEngagementId(partnerId, engagementId, programTypeGuid);
             return Ok(result);
         }
     }

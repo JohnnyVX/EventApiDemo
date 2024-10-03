@@ -12,13 +12,13 @@ namespace Service.Events
             return await Task.FromResult($"Event details for {eventRegistrationBatchId} and {programTypeGuid}");
         }
 
-        public async Task<bool> IsOnEventAccessList(string mpnId)
+        public async Task<bool> IsOnEventAccessList(string partnerId)
         {
             // Provide some demo data
             return await Task.FromResult(true);
         }
 
-        public async Task<bool> canPartnerAccessEngagementId(string mpnId, string engagementId, string programTypeGuid)
+        public async Task<bool> canPartnerAccessEngagementId(string partnerId, string engagementId, string programTypeGuid)
         {
             // Provide some demo data
             return await Task.FromResult(true);

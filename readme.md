@@ -16,7 +16,7 @@ The application will be available at http://localhost:5175.
 # Endpoints
 The application provides the following endpoints:
 
-GET http://localhost:5175/api/Event/IsOnEventAccessList/{mpnId}: Checks if an event is on the access list. Replace {mpnId} with the ID of the event.
+GET http://localhost:5175/api/Event/IsOnEventAccessList/{partnerId}: Checks if an event is on the access list. Replace {partnerId} with the ID of the event.
 
 For example, to check if event `1234` is on the access list, use the following URL:
 http://localhost:5175/api/Event/IsOnEventAccessList/1234
@@ -39,7 +39,7 @@ During the development of the `GetIsOnEventAccessList` method, we identified a p
 
 **JohnnyVReply & TaThompson: What is the purpose of the GetIsOnEventAccessList method?**
 
-**GitHub Copilot Chat**: The `GetIsOnEventAccessList` method is an API endpoint that checks if an event is on the access list. It takes an event ID (`mpnId`) as a parameter.
+**GitHub Copilot Chat**: The `GetIsOnEventAccessList` method is an API endpoint that checks if an event is on the access list. It takes an event ID (`partnerId`) as a parameter.
 
 **JohnnyVReply & TaThompson: What are the potential security risks in the GetIsOnEventAccessList method?**
 
@@ -86,18 +86,18 @@ During the development of the `GetIsOnEventAccessList` method, we identified a p
 ## ✅ QA 'Accepted' Solution
 This conversation with GitHub Copilot helped us improve the security of the `GetIsOnEventAccessList` method by preventing stack traces from being returned in the response.
 ```csharp
-[HttpGet("IsOnEventAccessList/{mpnId}")]
-public async Task<IActionResult> GetIsOnEventAccessList(string mpnId)
+[HttpGet("IsOnEventAccessList/{partnerId}")]
+public async Task<IActionResult> GetIsOnEventAccessList(string partnerId)
 {
     try
     {
-        var result = await _eventService.IsOnEventAccessList(mpnId);
+        var result = await _eventService.IsOnEventAccessList(partnerId);
         return Ok(result);
     }
     catch (Exception ex)
     {
-        // Log the exception details internally along with the mpnId
-        _logger.LogError(ex, $"Error occurred while checking event access list for mpnId: {mpnId}");
+        // Log the exception details internally along with the partnerId
+        _logger.LogError(ex, $"Error occurred while checking event access list for partnerId: {partnerId}");
 
         // Return a generic error message with a 400 status
         return BadRequest(new { success = false, message = "An error occurred while processing your request. Please try again later." });
@@ -108,10 +108,10 @@ public async Task<IActionResult> GetIsOnEventAccessList(string mpnId)
 ## Original Code
 
 ```csharp
-[HttpGet("IsOnEventAccessList/{mpnId}")]
-public async Task<IActionResult> GetIsOnEventAccessList(string mpnId)
+[HttpGet("IsOnEventAccessList/{partnerId}")]
+public async Task<IActionResult> GetIsOnEventAccessList(string partnerId)
 {
-    var result = await _eventService.IsOnEventAccessList(mpnId);
+    var result = await _eventService.IsOnEventAccessList(partnerId);
     return Ok(result);
 }
 ```
@@ -123,7 +123,7 @@ Ask questions? `Why?` `How?` `@workspace /explain` Take this chance to learn, to
 **JohnnyVReply & TaThompson:**
 Why is the qa complaining (I jest😂) about that for security? Here is the stacktrace:
 
-System.Exception: MD5 hash computation failed with ArgumentOutOfRangeException ---> System.ArgumentException: Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection. at System.Security.Cryptography.HashAlgorithm.ComputeHash(Byte[] buffer, Int32 offset, Int32 count) at Service.Events.EventService.IsOnEventAccessList(String mpnId) in c:\Users\john\code\EventApiDemo\Services\EventService.cs:line 35 --- End of inner exception stack trace --- at Service.Events.EventService.IsOnEventAccessList(String mpnId) in c:\Users\john\code\EventApiDemo\Services\EventService.cs:line 42 at Api.Controllers.EventController.GetIsOnEventAccessList(String mpnId) in c:\Users\john\code\EventApiDemo\Controllers\EventController.cs:line 40 at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync() --- End of stack trace from previous location --- at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted) at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope) at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope) at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context) at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext) at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider) at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+System.Exception: MD5 hash computation failed with ArgumentOutOfRangeException ---> System.ArgumentException: Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection. at System.Security.Cryptography.HashAlgorithm.ComputeHash(Byte[] buffer, Int32 offset, Int32 count) at Service.Events.EventService.IsOnEventAccessList(String partnerId) in c:\Users\john\code\EventApiDemo\Services\EventService.cs:line 35 --- End of inner exception stack trace --- at Service.Events.EventService.IsOnEventAccessList(String partnerId) in c:\Users\john\code\EventApiDemo\Services\EventService.cs:line 42 at Api.Controllers.EventController.GetIsOnEventAccessList(String partnerId) in c:\Users\john\code\EventApiDemo\Controllers\EventController.cs:line 40 at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync() --- End of stack trace from previous location --- at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted) at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope) at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope) at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context) at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext) at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider) at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
 
 **GitHub Copilot**: 
 
@@ -159,20 +159,20 @@ Without seeing the code for the IsOnEventAccessList method, I can't provide a sp
 
 What about this stacktrace? 
 
-System.Exception: SQL Error with Query: SELECT * FROM Users WHERE Username = '{mpnId}' at Service.Events.EventService.IsOnEventAccessList(String mpnId) in c:\Users\john\code\EventApiDemo\Services\EventService.cs:line 51 at Api.Controllers.EventController.GetIsOnEventAccessList(String mpnId) in c:\Users\john\code\EventApiDemo\Controllers\EventController.cs:line 40 at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync() --- End of stack trace from previous location --- at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted) at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope) at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope) at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context) at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext) at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider) at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+System.Exception: SQL Error with Query: SELECT * FROM Users WHERE Username = '{partnerId}' at Service.Events.EventService.IsOnEventAccessList(String partnerId) in c:\Users\john\code\EventApiDemo\Services\EventService.cs:line 51 at Api.Controllers.EventController.GetIsOnEventAccessList(String partnerId) in c:\Users\john\code\EventApiDemo\Controllers\EventController.cs:line 40 at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted) at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync() --- End of stack trace from previous location --- at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted) at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope) at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope) at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context) at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext) at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider) at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
 
 **GitHub Copilot:**
 
-The stack trace indicates that there's an SQL error occurring when executing the query SELECT * FROM Users WHERE Username = '{mpnId}' in the IsOnEventAccessList method.
+The stack trace indicates that there's an SQL error occurring when executing the query SELECT * FROM Users WHERE Username = '{partnerId}' in the IsOnEventAccessList method.
 
-The most concerning part of this stack trace is the SQL query itself. It appears that the mpnId is being directly inserted into the SQL query. This is a serious security vulnerability known as SQL Injection, where an attacker could potentially manipulate the mpnId input to execute arbitrary SQL commands on your database.
+The most concerning part of this stack trace is the SQL query itself. It appears that the partnerId is being directly inserted into the SQL query. This is a serious security vulnerability known as SQL Injection, where an attacker could potentially manipulate the partnerId input to execute arbitrary SQL commands on your database.
 
 To fix this, you should use parameterized queries or an ORM (Object-Relational Mapping) that automatically handles this for you. Here's an example of how you can modify the query using parameterized queries:
 
 ```csharp
-string query = "SELECT * FROM Users WHERE Username = @mpnId";
+string query = "SELECT * FROM Users WHERE Username = @partnerId";
 SqlCommand command = new SqlCommand(query, yourSqlConnection);
-command.Parameters.Add(new SqlParameter("@mpnId", mpnId));
+command.Parameters.Add(new SqlParameter("@partnerId", partnerId));
 ```
 
 **JohnnyVReply & TaThompson:**
