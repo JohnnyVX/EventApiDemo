@@ -1,0 +1,146 @@
+info:
+  contact: {}
+paths:
+  /api/event/can_partner_access_engagement_id/{partnerId}/{engagementId}/{programTypeGuid}:
+    get:
+      consumes:
+      - application/json
+      description: Check if a partner can access an engagement ID by partner ID, engagement
+        ID, and program type GUID
+      parameters:
+      - description: Partner ID
+        in: path
+        name: partnerId
+        required: true
+        type: string
+      - description: Engagement ID
+        in: path
+        name: engagementId
+        required: true
+        type: string
+      - description: Program Type GUID
+        in: path
+        name: programTypeGuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Check if a partner can access an engagement ID
+      tags:
+      - events
+  /api/event/can_partner_access_event_registration_batch_id/{partnerId}/{eventBatchId}/{programTypeGuid}:
+    get:
+      consumes:
+      - application/json
+      description: Check if a partner can access an event registration batch ID by
+        partner ID, event batch ID, and program type GUID
+      parameters:
+      - description: Partner ID
+        in: path
+        name: partnerId
+        required: true
+        type: string
+      - description: Event Batch ID
+        in: path
+        name: eventBatchId
+        required: true
+        type: string
+      - description: Program Type GUID
+        in: path
+        name: programTypeGuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Check if a partner can access an event registration batch ID
+      tags:
+      - events
+  /api/event/get_proposed_event/{eventRegistrationBatchId}:
+    get:
+      consumes:
+      - application/json
+      description: Get proposed event details by event registration batch ID and program
+        type
+      parameters:
+      - description: Event Registration Batch ID
+        in: path
+        name: eventRegistrationBatchId
+        required: true
+        type: string
+      - description: Program Type
+        in: query
+        name: programType
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get proposed event details
+      tags:
+      - events
+  /api/event/is_on_event_access_list/{partnerId}:
+    get:
+      consumes:
+      - application/json
+      description: Check if an event is on the access list by partner ID
+      parameters:
+      - description: Partner ID
+        in: path
+        name: partnerId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Check if an event is on the access list
+      tags:
+      - events
+swagger: "2.0"
