@@ -1,6 +1,7 @@
 package main
 
 import (
+    "log"
     "github.com/gin-gonic/gin"
     "github.com/johnnyvx/EventApiDemo/internal/controllers"
     "github.com/johnnyvx/EventApiDemo/internal/services"
@@ -22,6 +23,9 @@ func main() {
 
     // Serve Swagger UI
     r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+    // Print link to Swagger UI in the output
+    log.Println("Swagger UI available at http://localhost:5175/swagger/index.html")
 
     r.Run(":5175")
 }
