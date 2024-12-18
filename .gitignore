@@ -58,3 +58,4 @@ obj/*.nuget.cache
 
 # Ignore the build
 EventApiDemo
+cmd/__debug_bin*
