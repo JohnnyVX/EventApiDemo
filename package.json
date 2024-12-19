@@ -1,0 +1,16 @@
+{
+  "name": "nodejs-api-project",
+  "version": "1.0.0",
+  "description": "A Node.js API project for managing events.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,27 +1,38 @@
-# Event API Demo Overview
+# Node.js API Project
 
-This project is a Go Web API application that provides endpoints for event management.
+This project is a Node.js API that mirrors the functionality of a Go API.
 
-# Setup
-The app should be all set to run as is. Main branch contains vulnerabilities. Other branches contain solutions, some with commits to show various steps.
+## Getting Started
 
-## Running the Application
-After setting up, you can build and run the application:
-go build -o EventApiDemo ./cmd
-./EventApiDemo
+### Prerequisites
 
-The application will be available at http://localhost:5175.
+- Node.js (v14 or higher)
+- npm (v6 or higher)
 
-# Endpoints
-The application provides the following endpoints:
+### Installation
 
-GET http://localhost:5175/api/event/is_on_event_access_list/{partnerId}: Checks if an event is on the access list. Replace {partnerId} with the ID of the event.
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/yourusername/nodejs-api-project.git
+   cd nodejs-api-project
+2. Install dependencies:
+   npm install
+   
+## Running the API
 
-For example, to check if event `1234` is on the access list, use the following URL:
-http://localhost:5175/api/event/is_on_event_access_list/1234
+Start the server:
 
-Note: If you use an invalid ID such as `error`, the application will throw an exception.
+```sh
+npm start
+```
 
-# Alternative Scripts Folder Start from Scratch Setup
+The API will be running at [http://localhost:5175](http://localhost:5175).
 
-If one wanted to create their own demo from scratch, some scripts that were used as a basis for creating the repo are in `scripts` directory. These scripts will create the necessary directories and files, initialize a Git repository, and set up the project for first use.
+Access the Swagger UI at [http://localhost:5175/swagger](http://localhost:5175/swagger) to interact with the API endpoints.
+
+## License
+
+This project is licensed under the MIT License.
+
+## GH Copilot Prompt to Rewrite the Go API to Node.js
+@workspace new Create a new Node.js project with the necessary directories and files for controllers, routes, services, and the main app file. Include files for swagger UI and ensure routes are setup for that. Install the required dependencies: express. Implement the service methods in src/services/eventService.js based on the Go service methods. Implement the controller methods in src/controllers/eventController.js to handle the API requests. Define the routes in src/routes/eventRoutes.js. Ensure that it has bad error handling with uncaught exceptions for this teaching example.
